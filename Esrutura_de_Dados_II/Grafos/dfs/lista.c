@@ -154,6 +154,7 @@ void freeDFS(dfsInfo* d) {
     free(d->end);
     free(d->pre);
     free(d);
-}//
+}
+//
 // Created by josecls on 05/06/2026.
 //

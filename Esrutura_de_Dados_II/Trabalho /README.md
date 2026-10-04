@@ -94,4 +94,6 @@ Em seu pior caso, onde nenhuma palavra compartilha nenhuma letra ou prefixo com 
 
 * LINKEDIN. O que distingue uma árvore Trie de uma árvore Radix? **LinkedIn Advice**, 2026. Disponível em: [https://www.linkedin.com/advice/1/what-distinguishes-trie-from-radix-tree-skills-programming-kamdc?lang=pt&lang=pt&originalSubdomain=pt&lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3BkyYeAclCR4mn60%2BaoX5syg%3D%3D&originalSubdomain_pt](https://www.google.com/search?q=https://www.linkedin.com/advice/1/what-distinguishes-trie-from-radix-tree-skills-programming-kamdc%3Flang%3Dpt%26lang%3Dpt%26originalSubdomain%3Dpt%26lipi%3Durn%253Ali%253Apage%253Ad_flagship3_pulse_read%253BkyYeAclCR4mn60%252BaoX5syg%253D%253D%26originalSubdomain_pt).  Acesso em: 23 jun. 2026.
 
-* MOLENAAR, Rene. Longest Prefix Match Routing. **NetworkLessons**, 2026.  Disponível em: [https://networklessons.com/ip-routing/longest-prefix-match-routing](https://networklessons.com/ip-routing/longest-prefix-match-routing). Acesso em: 24 jun. 2026.
+* MOLENAAR, Rene. Longest Prefix Match Routing. **
+* 
+* NetworkLessons**, 2026.  Disponível em: [https://networklessons.com/ip-routing/longest-prefix-match-routing](https://networklessons.com/ip-routing/longest-prefix-match-routing). Acesso em: 24 jun. 2026.

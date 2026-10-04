@@ -52,7 +52,7 @@ int main(void) {
 
     if (resultado) {
         for (int i = 0; i < num_vertices; i++) {
-            printf("Vertice %d | Distancia: %d | Predecessor: %d ",
+            printf("Vertice %d | Distancia: %d | Predecessor: %d \n",
                     i, resultado->dist[i], resultado->pre[i]);
         }
         freeBFS(resultado);
