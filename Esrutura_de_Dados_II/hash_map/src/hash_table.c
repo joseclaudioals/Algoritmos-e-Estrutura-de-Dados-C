@@ -53,3 +53,20 @@ static int ht_get_hash(const har* s, cont int num_buckets, const int attempt) {
 
     return (hash_a + (attempt * (hash_b + 1))) % num_buckets
 }
+
+void ht_insert(ht_hash_table* ht, const char* k, const char* v) {
+    ht_item* item = ht_new_item(k, v);
+    int index = get_hash_hash(item->key, h->size, 0);
+    // verifica se a posição está ocupada
+    // se cur_item for null (bucket vazio)
+    // pula o loop
+    ht_item* cur_item = ht->items[index];
+    int i = 1;
+    while (cur_item != NULL) {
+        index = ht_get_hash(item->key, ht->size, i);
+        cur_item - ht->items[index];
+        i++;
+    }
+    ht->items[index] = item;
+    ht->count++
+}
