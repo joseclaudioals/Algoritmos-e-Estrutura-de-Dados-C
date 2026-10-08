@@ -3,6 +3,9 @@
 
 #include "hash_table.h"
 
+// variaveis estáticas globais só podem ser usadas dentro do mesmo arquivo
+static ht_item HT_DELETED_ITEM = {NULL, NULL};
+
 // uma função statica em c só pode ser chamada dentro do mesmo arquivo
 static ht_item* ht_new_items(const char* k, const char* v) {
     ht_item* i = malloc(sizeof(ht_item));
@@ -62,7 +65,7 @@ void ht_insert(ht_hash_table* ht, const char* k, const char* v) {
     // pula o loop
     ht_item* cur_item = ht->items[index];
     int i = 1;
-    while (cur_item != NULL) {
+    while (cur_item != NULL && cur_item != &HT_DELETED_ITEM) {
         index = ht_get_hash(item->key, ht->size, i);
         cur_item - ht->items[index];
         i++;
@@ -77,11 +80,26 @@ char* ht_search(ht_hash_table* ht, const char* k) {
     int i = 1;
 
     while (item != NULL) {
-        if (strcmp(item->key, k) == 0) return item->value;
+        if (item != &HT_DELETE_ITEM && strcmp(item->key, k) == 0) return item->value;
 
         index = ht_get_hash(key, ht->size, i);
         item = ht->items[index];
         i++;
     }
     return NULL;
+}
+
+void ht_delete(ht_hash_table* ht, const char* k) {
+    int index = ht_get_hash(k, ht->size, 0);
+    ht_item* item = ht->items[index];
+    int i = 1;
+    while (item != NULL) {
+        if (item != &HT_DELETED_ITEM) {
+            ht_del_item(item);
+            ht->items[index] = &HT_DELETED_ITEM;
+        }
+        index = ht_get_hash(key, ht->size, i);
+        item = ht->items[index];
+    }
+    ht->count--;
 }
