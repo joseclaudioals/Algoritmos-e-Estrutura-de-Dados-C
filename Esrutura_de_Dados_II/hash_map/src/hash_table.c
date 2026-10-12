@@ -71,6 +71,8 @@ static int ht_get_hash(const har* s, cont int num_buckets, const int attempt) {
 
 // insere na tabela hash
 void ht_insert(ht_hash_table* ht, const char* k, const char* v) {
+    const int load = ht->count * 100 / ht->size;
+    if (load > 70) { ht_resize_up(ht);}
     ht_item* item = ht_new_item(k, v);
     int index = get_hash_hash(item->key, h->size, 0);
     // verifica se a posição está ocupada
@@ -105,6 +107,9 @@ char* ht_search(ht_hash_table* ht, const char* k) {
 
 // deleta um item da tabela hash
 void ht_delete(ht_hash_table* ht, const char* k) {
+    const int load = ht->count * 100 / ht->size;
+    if (load < 10) {ht_resize_down(ht);}
+
     int index = ht_get_hash(k, ht->size, 0);
     ht_item* item = ht->items[index];
     int i = 1;
@@ -153,7 +158,7 @@ static void ht_resize_up(ht_hash_table* ht) {
 }
 
 // diminui a tabela
-static void ht_resize_dpwn(ht_hash_table* ht) {
+static void ht_resize_down(ht_hash_table* ht) {
     const int new_size = ht->base_size / 2;
     ht_resized(ht, new_size);
 }
