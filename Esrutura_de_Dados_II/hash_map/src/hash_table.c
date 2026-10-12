@@ -126,6 +126,13 @@ void ht_insert(ht_hash_table* ht, const char* k, const char* v) {
     ht_item* cur_item = ht->items[index];
     int i = 1;
     while (cur_item != NULL && cur_item != &HT_DELETED_ITEM) {
+        // se tiver a mesma chave, substitui a antiga pela nova
+        if (strcmp(cur_item->key, k) == 0) {
+            free(cur_item->value);
+            cur_item->value = strdup(k);
+            ht_del_item(item);
+            return;
+        }
         index = ht_get_hash(item->key, ht->size, i);
         cur_item = ht->items[index];
         i++;
