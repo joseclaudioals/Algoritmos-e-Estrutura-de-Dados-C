@@ -15,6 +15,7 @@ static ht_item* ht_new_items(const char* k, const char* v) {
     return i;
 }
 
+// cria a tabela hash com o tamanho especificado
 static ht_hash_table* ht_new_sized(const int base_size){
 	ht_hash_table* ht = malloc(sizeof(ht_hash_table));
 	ht->base_size = base_size;
@@ -31,12 +32,15 @@ ht_hash_table* new_ht(const int size) {
     ht_new_sized(HT_INITIAL_BASE_SIZE);
 }
 
+// apaga o item na tabela
 static void ht_del_item(ht_item* i) {
     free(i->key);
     free(i->value);
     free(i);
+
 }
 
+// apaga a tabela hash
 void ht_del_hash_table(ht_hash_table* ht) {
     for (int i = 0; i < hht->size; i++) {
         ht_item* item = ht->items[i];
@@ -46,6 +50,7 @@ void ht_del_hash_table(ht_hash_table* ht) {
     free(ht);
 }
 
+// cria o hash de uma string
 static int ht_hash(const char* s, const int a, const int m ) {
     long hash = 0;
     const int len_s = strlen(s);
@@ -64,6 +69,7 @@ static int ht_get_hash(const har* s, cont int num_buckets, const int attempt) {
     return (hash_a + (attempt * (hash_b + 1))) % num_buckets
 }
 
+// insere na tabela hash
 void ht_insert(ht_hash_table* ht, const char* k, const char* v) {
     ht_item* item = ht_new_item(k, v);
     int index = get_hash_hash(item->key, h->size, 0);
@@ -81,6 +87,7 @@ void ht_insert(ht_hash_table* ht, const char* k, const char* v) {
     ht->count++
 }
 
+// busca na tabela hash
 char* ht_search(ht_hash_table* ht, const char* k) {
     int index = ht_get_hash(k, ht->size, 0);
     ht_item* item = ht->items[index];
@@ -96,6 +103,7 @@ char* ht_search(ht_hash_table* ht, const char* k) {
     return NULL;
 }
 
+// deleta um item da tabela hash
 void ht_delete(ht_hash_table* ht, const char* k) {
     int index = ht_get_hash(k, ht->size, 0);
     ht_item* item = ht->items[index];
@@ -105,8 +113,35 @@ void ht_delete(ht_hash_table* ht, const char* k) {
             ht_del_item(item);
             ht->items[index] = &HT_DELETED_ITEM;
         }
-        index = ht_get_hash(key, ht->size, i);
+        index = ht_get_hash(k, ht->size, i);
         item = ht->items[index];
     }
     ht->count--;
+}
+
+// redimensiona a tabela hash
+static void ht_resized(ht_hash_table* ht, const int base_size) {
+	if (base_size < HT_INITIAL_BASE_SIZE) return;
+
+	ht_hash_table* new_ht = ht_new_sized(base_size);
+	for (int i = 0; i < ht->size; i++) {
+		ht_item* item = ht->items[i];
+		if (item != NULL && item != &HT_DELETED_ITEM) {
+		    ht_insert(new_ht, item->key, item->value);
+		}
+	}
+
+    ht->base_size = new_ht->base_size;
+    ht->count = new_ht->count;
+
+    // deletndo a nova tabela e passando tudo para a antiga
+    const int tmp_size = ht->size;
+    ht->size = new_ht->size;
+    new_ht->size = tmp_size;
+
+    ht_item** tmp_items = ht->items;
+    ht->items = new_ht->items;
+    new_ht->items = tmp_items;
+
+    ht_del_hash_table(new_ht)
 }
