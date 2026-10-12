@@ -159,13 +159,15 @@ void ht_delete(ht_hash_table* ht, const char* k) {
     ht_item* item = ht->items[index];
     int i = 1;
     while (item != NULL) {
-        if (item != &HT_DELETED_ITEM) {
+        if (item != &HT_DELETED_ITEM && (strcmp(item->key, k) == 0)) {
             ht_del_item(item);
             ht->items[index] = &HT_DELETED_ITEM;
+            ht->count--;
+            return;
         }
         index = ht_get_hash(k, ht->size, i);
         item = ht->items[index];
+        i++;
     }
-    ht->count--;
 }
 
