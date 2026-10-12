@@ -15,3 +15,17 @@ typedef struct{
     ht_item** items;
 }ht_hash_table;
 
+// Cria a tabela
+ht_hash_table* new_ht(const int size);
+
+// Deleta a tabela
+void ht_del_hash_table(ht_hash_table* ht);
+
+// Insere ou atualiza um item
+void ht_insert(ht_hash_table* ht, const char* k, const char* v);
+
+// Busca um item
+char* ht_search(ht_hash_table* ht, const char* k);
+
+// Deleta um item
+void ht_delete(ht_hash_table* ht, const char* k);
