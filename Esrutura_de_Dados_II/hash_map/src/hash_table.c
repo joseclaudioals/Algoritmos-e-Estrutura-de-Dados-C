@@ -145,3 +145,15 @@ static void ht_resized(ht_hash_table* ht, const int base_size) {
 
     ht_del_hash_table(new_ht)
 }
+
+// aumenta a tabela
+static void ht_resize_up(ht_hash_table* ht) {
+    const int new_size = ht->base_size * 2;
+    ht_resized(ht, new_size);
+}
+
+// diminui a tabela
+static void ht_resize_dpwn(ht_hash_table* ht) {
+    const int new_size = ht->base_size / 2;
+    ht_resized(ht, new_size);
+}
