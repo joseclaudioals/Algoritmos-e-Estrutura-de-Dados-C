@@ -4,6 +4,7 @@
 #include "hash_table.h"
 
 // variaveis estáticas globais só podem ser usadas dentro do mesmo arquivo
+static const int HT_INITIAL_BASE_SIZE = 50;
 static ht_item HT_DELETED_ITEM = {NULL, NULL};
 
 // uma função statica em c só pode ser chamada dentro do mesmo arquivo
@@ -14,14 +15,20 @@ static ht_item* ht_new_items(const char* k, const char* v) {
     return i;
 }
 
+static ht_hash_table* ht_new_sized(const int base_size){
+	ht_hash_table* ht = malloc(sizeof(ht_hash_table));
+	ht->base_size = base_size;
+
+	ht->size = next_prime(ht->base_size);
+
+	ht->count = 0;
+	ht->items = calloc((size_t)ht->size, sizeof(ht_item*));
+	return ht;
+}
+
+// inicializa uma nova tabela hash
 ht_hash_table* new_ht(const int size) {
-    ht_hash_table* ht = malloc(sizeof(ht_hash_table));
-
-    ht->size = size;
-    ht->count = 0;
-    ht->items = calloc((size_t)ht->size, sizeof(h_item*));
-
-    return ht;
+    ht_new_sized(HT_INITIAL_BASE_SIZE);
 }
 
 static void ht_del_item(ht_item* i) {
